@@ -4,16 +4,16 @@ public interface ListInterface{
     /**
      * Verify if it is the last node
      * @param node
-     * @return boolean
+     * @return null if the Node is empty
      */
-    public boolean iseEndOfList(Node node) throws Exception;
+    public boolean isEndOfList(Node node);
 
     /**
      * Insert an Object to the list
      * @param item
      * @return true if the object is added to the list
      */
-    public boolean insert(Object item) throws Exception;
+    //public boolean insert(Object item) throws Exception;
 
     /**
      * verify if the list is empty
@@ -31,11 +31,11 @@ public interface ListInterface{
 
     //---------------------------- SEARCH METHODS --------------------------------------//
 
-    public Object  getItem(int index) throws Exception;
-    public Object contains(Object reference);
-    public Object getFirstItem() throws Exception;
-    public Object getLastItem() throws Exception;
-    public int getIndexOf(Object reference) throws Exception;
+    //public Object  getItem(int index) throws Exception;
+    //public Object contains(Object reference);
+    //public Object getFirstItem() throws Exception;
+    //public Object getLastItem() throws Exception;
+    //public int getIndexOf(Object reference) throws Exception;
     //public Iterator getIterator() throws Exception;
 
     //----------------------------- DELETE MOTHODS -------------------------------------//
@@ -46,14 +46,14 @@ public interface ListInterface{
      * @return the deleted item or null if it does not found it.
      * @throws Exception
      */
-    public Object deleteItem(int index) throws Exception;
+    //public Object deleteItem(int index) throws Exception;
 
     /**
      * Delete Item by reference
      * @param reference
      * @return deleted Item or null if it is not in the list.
      */
-    public Object deleteItem(Object reference);
+    //public Object deleteItem(Object reference);
 
     //------------------------------------------------------------------------------------//
 
@@ -61,7 +61,7 @@ public interface ListInterface{
 
     //-------------------------------- LAMBDA EXPRESSIONS --------------------------------//
     
-    public void  forEach(IntForEach intForEach) throws Exception;
+    //public void  forEach(IntForEach intForEach) throws Exception;
 
     /**
      * applied a function to each node and it returns an object, it go throughout all the list.
@@ -69,7 +69,7 @@ public interface ListInterface{
      * @return a List with the results.
      * @throws Exception
      */
-    public List map(IntMap intMap) throws Exception;
+    //public List map(IntMap intMap) throws Exception;
 
     /**
      * Applies a function if the result is true and the item is added to the a new list.
@@ -77,13 +77,13 @@ public interface ListInterface{
      * @return List with Item that were affeced.
      * @throws Exception
      */
-    public List filter(IntFilter intFilter) throws Exception;
+    //public List filter(IntFilter intFilter) throws Exception;
 
-    public void print(IntPrint intPrint) throws Exception;
+    //public void print(IntPrint intPrint) throws Exception;
 
-    public List sort(IntCompare intSort) throws Exception;
+    //public List sort(IntCompare intSort) throws Exception;
 
-    public boolean find(IntFind finder) throws Exception;
+    //public boolean find(IntFind finder) throws Exception;
 
     /**
      * Search for an Iterator
@@ -93,7 +93,7 @@ public interface ListInterface{
      */
     //public Iterator search(IntFind finder) throws Exception;
 
-    public Object reduce(Object initialValue,IntReducer reducer) throws Exception;
+    //public Object reduce(Object initialValue,IntReducer reducer) throws Exception;
 
     
 
