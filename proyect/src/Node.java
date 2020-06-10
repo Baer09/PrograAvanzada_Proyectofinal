@@ -3,6 +3,16 @@ public class Node {
     private Object item;
     private Node next;
 
+    public Node(){
+        this.item = null;
+        this.next = null;
+    }
+
+    public Node(Object item){
+        this.setItem(item);
+        this.setNext(null);
+    }
+
     public void setItem(Object item){
         this.item = item;
     }

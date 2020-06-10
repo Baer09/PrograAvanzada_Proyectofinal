@@ -13,7 +13,7 @@ public interface ListInterface{
      * @param item
      * @return true if the object is added to the list
      */
-    //public boolean insert(Object item) throws Exception;
+    //public boolean insert(int index,Object item) throws Exception;
 
     /**
      * verify if the list is empty

@@ -3,15 +3,18 @@ public class TestProject {
     public static void main(String[]args){
         List list = new List();
 
-        System.out.println("Esta limpia la lista: " + list.isEmpty());
+        list.insertFirst(1);
+        list.insertFirst(3);
+        list.insertLast("hola");
         
-        list.insertFirst("one");
-        list.insertFirst(2);
-        list.insertFirst("two");
+        try {
+            list.insert(11, "Penultimo nodo");
+        } catch (Exception e) {
+           System.out.println("Index out of bounds");
+        }
 
-        System.out.println("Numero de Nodos: " + list.getLength());
-
-        System.out.println("Imprimiendo Datos de Nodos: \n");
+                
+        
         list.print();
         
     }
