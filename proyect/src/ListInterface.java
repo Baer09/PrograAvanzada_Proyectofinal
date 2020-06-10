@@ -13,7 +13,7 @@ public interface ListInterface{
      * @param item
      * @return true if the object is added to the list
      */
-    //public boolean insert(int index,Object item) throws Exception;
+    public boolean insert(int index,Object item) throws Exception;
 
     /**
      * verify if the list is empty
@@ -31,11 +31,11 @@ public interface ListInterface{
 
     //---------------------------- SEARCH METHODS --------------------------------------//
 
-    //public Object  getItem(int index) throws Exception;
-    //public Object contains(Object reference);
-    //public Object getFirstItem() throws Exception;
-    //public Object getLastItem() throws Exception;
-    //public int getIndexOf(Object reference) throws Exception;
+    public Object  getItemByPosition(int index) throws Exception;
+    public boolean contains(Object reference);
+    public Object getFirstItem() throws Exception;
+    public Object getLastItem() throws Exception;
+    public int getIndexOf(Object reference) throws Exception;
     //public Iterator getIterator() throws Exception;
 
     //----------------------------- DELETE MOTHODS -------------------------------------//

@@ -1,0 +1,2 @@
+javac TestProject.java
+java TestProject

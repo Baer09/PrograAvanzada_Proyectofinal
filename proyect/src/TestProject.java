@@ -7,15 +7,15 @@ public class TestProject {
         list.insertFirst(3);
         list.insertLast("hola");
         
-        try {
-            list.insert(11, "Penultimo nodo");
-        } catch (Exception e) {
-           System.out.println("Index out of bounds");
-        }
-
-                
+        
         
         list.print();
+        System.out.println("findng reference : hola ");
+        String find = (list.contains("hol")) ? "Item is in the list":"Item is not in the list";
+        System.out.println(find);
+
+
+        
         
     }
     

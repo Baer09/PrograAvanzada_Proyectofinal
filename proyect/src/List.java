@@ -102,9 +102,7 @@ public class List implements ListInterface{
     public boolean isEndOfList(Node node){
         return (node == null);
     }
-    public int getLength(){
-        return this.totalNodes;
-    }
+    
     private boolean isValidIndex(int index){
         return (index >= 0 && index <= this.totalNodes);
     }
@@ -127,7 +125,85 @@ public class List implements ListInterface{
 
     
 
-    ////////////////
+    //--------------------------------------- SEARCH METHODS -----------------------------------------------//
+    
+    /**
+     * get totalNodes
+     * @return totalNodes
+     */
+    public int getLength(){
+        return this.totalNodes;
+    }
+
+    public Object getFirstItem()throws Exception {
+        if(this.first != null){
+            return this.first.getItem();
+        }
+        throw new Exception("The list is Empty");        
+    }
+
+    public Object getLastItem()throws Exception{
+        if(this.last != null){
+            return this.last.getItem();
+        }
+        throw new Exception("The list is empty");
+    }
+
+    public Object getItemByPosition(int index)throws Exception{
+        if(!isEmpty()){// check if is not empty list
+            if(isValidIndex(index)){// verify valid index
+                Node newNode = this.getNode(index);// get node by index
+                return newNode.getItem();
+            }
+            else 
+            throw new Exception("This is not a valid Index" ); 
+        }
+        return null;           
+                  
+    }
+
+    public int getIndexOf(Object reference) throws Exception{
+        if(!isEmpty()){// check if is not empty
+            Node aux = this.first;//aux Node and pointed to first
+            int index = 0;
+            while(!isEndOfList(aux)){// continue until is not end of list
+                if(aux.getItem().equals(reference)){
+                    return index;
+                }
+                index++;
+                aux = aux.getNext();
+
+            }// end while
+            
+            throw new Exception("Object not found");  // unable to find node     
+
+        }
+        else{
+            throw new Exception("List is empty");
+        }
+        
+
+    }
+
+    public boolean contains(Object reference){
+        try {
+            int index = this.getIndexOf(reference);
+            return (index >= 0);
+        } catch (Exception e) {
+            return false;
+        }
+        
+        
+    }
+
+
+
+    /**
+     * find a Node by its index
+     * @param index
+     * @return return the node
+     * @throws Exception
+     */
     public Node getNode(int index) throws Exception{
         if(isEmpty()){
             throw new Exception("The list is empty");
