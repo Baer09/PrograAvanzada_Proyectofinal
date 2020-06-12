@@ -3,16 +3,27 @@ public class TestProject {
     public static void main(String[]args){
         List list = new List();
 
-        list.insertFirst(1);
+        list.insertFirst(100);
         list.insertFirst(3);
-        list.insertLast("hola");
-        
-        
+        list.insertFirst("hola");
+        list.insertLast("last");
+        list.insertFirst("new First");
+        list.insertLast("new Last");
         
         list.print();
-        System.out.println("findng reference : hola ");
-        String find = (list.contains("hol")) ? "Item is in the list":"Item is not in the list";
-        System.out.println(find);
+        System.out.println("");
+        
+        try {
+            System.out.println("delete by reference: " + list.deleteItem(100)+"\n");
+            list.print();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
+        
+        
+        
+        
 
 
         

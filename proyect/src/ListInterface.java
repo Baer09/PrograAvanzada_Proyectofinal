@@ -46,14 +46,14 @@ public interface ListInterface{
      * @return the deleted item or null if it does not found it.
      * @throws Exception
      */
-    //public Object deleteItem(int index) throws Exception;
+    public Object deleteItemByPosition(int index) throws Exception;
 
     /**
      * Delete Item by reference
      * @param reference
      * @return deleted Item or null if it is not in the list.
      */
-    //public Object deleteItem(Object reference);
+    public Object deleteItem(Object reference) throws Exception;
 
     //------------------------------------------------------------------------------------//
 

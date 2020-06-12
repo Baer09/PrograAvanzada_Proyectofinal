@@ -104,7 +104,7 @@ public class List implements ListInterface{
     }
     
     private boolean isValidIndex(int index){
-        return (index >= 0 && index <= this.totalNodes);
+        return (index > 0 && index <= this.totalNodes);
     }
 
     public void print(){
@@ -113,7 +113,7 @@ public class List implements ListInterface{
         int contador = 1 ;
         while(!isEndOfList(aux)){
             Object p = aux.getItem();
-            System.out.println(contador + " - " + p.toString()+" .");
+            System.out.println(contador + " - " +"Total Nodes: "+this.totalNodes+" "+ p.toString()+" .");
             aux = aux.getNext();
             contador++;           
         }
@@ -165,7 +165,7 @@ public class List implements ListInterface{
     public int getIndexOf(Object reference) throws Exception{
         if(!isEmpty()){// check if is not empty
             Node aux = this.first;//aux Node and pointed to first
-            int index = 0;
+            int index = 1;
             while(!isEndOfList(aux)){// continue until is not end of list
                 if(aux.getItem().equals(reference)){
                     return index;
@@ -212,14 +212,16 @@ public class List implements ListInterface{
               if(index == 1){
                   return this.first;
                 }
-              else if (index == (totalNodes - 1)){
+              else if (index == (totalNodes)){
                   return this.last;
                 }
               else{
                   Node aux = new Node();
                   aux = first;
-                  for(int i = 0; i < totalNodes;i++){
+                  //System.out.println(" aux : " + aux.getItem());
+                  for(int i = 1; i < index; i++){
                       aux = aux.getNext();
+                     // System.out.println("node inside FOR: " + aux.getItem());
                     }
                     return aux;
                 }
@@ -231,4 +233,94 @@ public class List implements ListInterface{
             
         
     }    
+
+//---------------------------------- DELETE METHODS -------------------------------------------------------//
+/**
+ * Delete first element in the list
+ * @return deleted Object
+ * @throws Exception
+ */
+public Object deleteFirst() throws Exception {
+    try {
+        Node aux = this.first;//pointed to first
+        Object item = first.getItem();// stored item 
+        this.first = first.getNext();// assign new first
+        aux = null; // delelte old first
+        totalNodes--;// 
+        return item;
+    } catch (Exception e) {
+        throw new Exception("Unable to delete first: Empty list" + e.getMessage());
+    }
+} 
+
+public Object deleteLast() throws Exception{
+    try {
+        if(this.totalNodes > 1){
+            
+            Node aux = this.getNode(this.totalNodes - 1);// assign penultimo            
+            Object auxItem = this.last.getItem();// stored deleted object 
+            this.last = aux;// new last
+            aux.setNext(null);// last points to null
+            totalNodes --;// reduce total nodes by 1
+            return auxItem;// return deleted object
+        }
+        else{
+            return this.deleteFirst();
+        }
+    } catch (Exception e) {
+        throw new Exception("Empty List : " + e.getMessage());
+    }
+
+}
+
+public Object deleteItemByPosition(int index) throws Exception{
+    if( index == 1){
+        return this.deleteFirst();
+    }
+    else if (index == this.totalNodes){
+        return this.deleteLast();
+    }
+    else {
+        if( !isEmpty()){
+            if(isValidIndex(index)){
+                Node previous = this.getNode(index - 1);
+                Node actual = previous.getNext();
+                Object item = actual.getItem();
+                previous.setNext(actual.getNext());
+                actual = null;
+                totalNodes --;
+                return item;
+            }
+            else{
+                throw new Exception("Invalid Index ");
+            }
+        }
+        else{
+            throw new Exception("The list is Empty");
+        }
+
+    }// last else
+
+}
+
+public Object deleteItem(Object reference) throws Exception{
+    if(!isEmpty()){
+        int position = this.getIndexOf(reference);// get index of reference
+        if(position == 1){
+            return this.deleteFirst();
+        }
+        else if(position == this.totalNodes){
+           return  this.deleteLast();
+        }
+        else{
+            return this.deleteItemByPosition(position);// delte item by index
+        }
+
+    }
+    else{   
+        throw new Exception("The list is empty");
+    }// last else
+
+};
+
 }// End of Class.
