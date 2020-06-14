@@ -323,4 +323,25 @@ public Object deleteItem(Object reference) throws Exception{
 
 };
 
+/**
+ * initialized new iterator that point to first
+ * @return returns a new instance of Iterator that points to FIRST
+ * @throws Exception
+ */
+public Iterator getIterator() throws Exception{
+    return new Iterator(this.first);
+
+}
+
+//-------------------------------------------------LAMBDA EXPRESSIONS ------------------------------------//
+
+public void  forEach(IntForEach intForEach) throws Exception{
+    Iterator ite = this.getIterator(); // new aux node that point to the begining of the list
+    while(ite.iterate()){ // while auxNode != null or is not endOfList
+        intForEach.forEach(ite.getItem()); // applies forEach to each Node
+
+    }
+
+}
+
 }// End of Class.

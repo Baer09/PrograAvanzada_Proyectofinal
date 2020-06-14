@@ -13,6 +13,11 @@ public class Node {
         this.setNext(null);
     }
 
+    public Node (Object item, Node next){
+        this.setItem(item);
+        this.setNext(next);
+    }
+
     public void setItem(Object item){
         this.item = item;
     }

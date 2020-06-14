@@ -36,7 +36,7 @@ public interface ListInterface{
     public Object getFirstItem() throws Exception;
     public Object getLastItem() throws Exception;
     public int getIndexOf(Object reference) throws Exception;
-    //public Iterator getIterator() throws Exception;
+    public Iterator getIterator() throws Exception;
 
     //----------------------------- DELETE MOTHODS -------------------------------------//
     
@@ -61,7 +61,7 @@ public interface ListInterface{
 
     //-------------------------------- LAMBDA EXPRESSIONS --------------------------------//
     
-    //public void  forEach(IntForEach intForEach) throws Exception;
+    public void  forEach(IntForEach intForEach) throws Exception;
 
     /**
      * applied a function to each node and it returns an object, it go throughout all the list.

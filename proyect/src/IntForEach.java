@@ -1,5 +1,5 @@
-
+@FunctionalInterface
 public interface IntForEach {
     
-    abstract void forEach(IntForEach intForEach) throws Exception;
+    abstract void forEach(Object theObject) throws Exception;
 }

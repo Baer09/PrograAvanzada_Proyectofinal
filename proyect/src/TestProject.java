@@ -2,22 +2,22 @@ public class TestProject {
 
     public static void main(String[]args){
         List list = new List();
+        Student student1 = new Student(1,"Brayan","Escobar",true);
+        Student student2 = new Student(2,"Angela","Amarilis",true);
+        Student student3 = new Student(3,"Mine","Fear",false);
 
-        list.insertFirst(100);
-        list.insertFirst(3);
-        list.insertFirst("hola");
-        list.insertLast("last");
-        list.insertFirst("new First");
-        list.insertLast("new Last");
-        
-        list.print();
-        System.out.println("");
-        
-        try {
-            System.out.println("delete by reference: " + list.deleteItem(100)+"\n");
-            list.print();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        list.insertFirst(student1);
+        list.insertLast(student2);
+        list.insertLast(student3);
+
+        try{
+            list.forEach(intForEach -> {
+            Student student = (Student) intForEach;
+            System.out.println(student);
+            });
+    
+        }catch(Exception exc){
+            System.out.println("error: " + exc.getMessage());
         }
         
         
