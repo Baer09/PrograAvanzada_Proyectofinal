@@ -11,10 +11,27 @@ public class TestProject {
         list.insertLast(student3);
 
         try{
+            // applying map and then forEach to print new list
+            List listUpdated = new List(); // new list to store objects 
+
+            listUpdated = list.map(intMap -> {
+                Student student = (Student) intMap;// casting
+                if(student.scholarship){// if true
+                    student.monthlyPayment = 100; // paymetn is 100
+                }
+                else{
+                    student.monthlyPayment = 900;// payment is 900
+                }
+
+                return student; // return object with new changes or no changes if scholarshop is false
+            });
+
             list.forEach(intForEach -> {
             Student student = (Student) intForEach;
             System.out.println(student);
-            });
+            }); 
+
+
     
         }catch(Exception exc){
             System.out.println("error: " + exc.getMessage());

@@ -1,5 +1,5 @@
 public interface IntMap {
 
-    public List map(IntMap intMap) throws Exception;
+    public Object map(Object item);
     
 }

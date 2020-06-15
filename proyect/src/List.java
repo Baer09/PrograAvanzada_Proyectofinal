@@ -94,6 +94,11 @@ public class List implements ListInterface{
         }
 
     }
+
+    public boolean insert(Object item) throws Exception{
+        return this.insertLast(item);
+    }
+
     
 
     public boolean isEmpty(){
@@ -343,5 +348,22 @@ public void  forEach(IntForEach intForEach) throws Exception{
     }
 
 }
+
+/**
+ * applies a function to each element of the list
+ * @return new list with changes in each element
+ * @throws Exception
+ */
+public List map(IntMap intMap) throws Exception{
+    List newList = new List();// create new list to store objects after new changes
+    Iterator ite = this.getIterator();// create iterator and pinted to first node
+    while(ite.iterate()){// while node is not null or end of list
+        Object result = intMap.map(ite.getItem());// apply map method from interface that receives an Object as argument
+        newList.insert(result);// apply inserLast to insert object in new list
+    }
+    return newList;// return new List
+
+}
+
 
 }// End of Class.

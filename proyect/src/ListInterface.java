@@ -69,7 +69,7 @@ public interface ListInterface{
      * @return a List with the results.
      * @throws Exception
      */
-    //public List map(IntMap intMap) throws Exception;
+    public List map(IntMap intMap) throws Exception;
 
     /**
      * Applies a function if the result is true and the item is added to the a new list.
