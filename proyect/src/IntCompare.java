@@ -6,5 +6,5 @@ public interface IntCompare {
      * @return returns negative if a < b, or  a = b and positive if a > b
      * @throws Exception
      */
-    public List sort(IntCompare intSort) throws Exception;
+    public int compare(Object a, Object b) throws Exception;
 }

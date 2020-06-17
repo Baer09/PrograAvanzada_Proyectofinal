@@ -81,7 +81,7 @@ public interface ListInterface{
 
     public void print(IntPrint intPrint) throws Exception;
 
-    //public List sort(IntCompare intSort) throws Exception;
+    public List sort(IntCompare intSort) throws Exception;
 
     //public boolean find(IntFind finder) throws Exception;
 

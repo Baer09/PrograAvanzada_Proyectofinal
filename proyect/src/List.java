@@ -364,7 +364,11 @@ public List map(IntMap intMap) throws Exception{
     return newList;// return new List
 
 }
-
+/**
+ * compares each object from the list and stored the elements that met the criteria in a new list.
+ * @return a list with elements that met the criteria
+ * @throws Exception
+ */
 public List filter(IntFilter intFilter) throws Exception{
     List newList = new List();// creatin new list
     Iterator ite = this.getIterator();// points iterator to first
@@ -379,11 +383,56 @@ public List filter(IntFilter intFilter) throws Exception{
 
 };
 
+/**
+ *prints each item in the list 
+  * @throws Exception
+ */
 public void print(IntPrint intPrint) throws Exception{
     Iterator ite = this.getIterator();
     while(ite.iterate()){
         System.out.println(intPrint.toPrint(ite.getItem()));
     }
+
+};
+
+/**
+ * compare each node then insert the node in the list.
+ * @param item
+ * @param comparator
+ * @return true if it was able to insert it
+ * @throws Exception
+ */
+public boolean sortedInsert(Object item,IntCompare comparator)throws Exception{
+    if(isEmpty()){
+        return this.insert(item);// if is empty, insert in first node
+    }
+    else if(comparator.compare(item,this.getFirstItem()) <= 0){// true if item  <= firstNode
+        return this.insertFirst(item);// new first
+    }
+    else if(comparator.compare(item,this.getLastItem()) >= 0 ){// true if item >= lastNode
+        return this.insertLast(item);// new last
+    }
+    else{// it should be insert at some point in the list
+        Iterator ite = this.getIterator();// create iterator and pointed to first
+        while(ite.iterate()){// iterator is not null or end of list
+            if(comparator.compare(item,ite.getItem()) >= 0  // compare if item is >= than current node
+            && comparator.compare(item,ite.peekNextItem()) <= 0 ){// and if is <= next node in the list
+
+                return ite.insertAfter(item);// insert in the next position after current node
+            }
+        }
+    }
+    return false;
+}
+
+public List sort(IntCompare comparator) throws Exception{
+    List sortedList = new List();// new list
+    Iterator ite = this.getIterator();
+    while(ite.iterate()){
+        sortedList.sortedInsert(ite.getItem(), comparator);// compare current item/node with compartor
+    }
+
+    return sortedList;
 
 };
 
