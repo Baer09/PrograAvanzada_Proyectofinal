@@ -83,7 +83,7 @@ public interface ListInterface{
 
     public List sort(IntCompare intSort) throws Exception;
 
-    //public boolean find(IntFind finder) throws Exception;
+    public boolean find(IntFind finder) throws Exception;
 
     /**
      * Search for an Iterator
@@ -91,7 +91,7 @@ public interface ListInterface{
      * @return an Iterator or null if it is not found
      * @throws Exception
      */
-    //public Iterator search(IntFind finder) throws Exception;
+    public Iterator search(IntFind finder) throws Exception;
 
     //public Object reduce(Object initialValue,IntReducer reducer) throws Exception;
 

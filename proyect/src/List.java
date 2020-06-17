@@ -425,6 +425,12 @@ public boolean sortedInsert(Object item,IntCompare comparator)throws Exception{
     return false;
 }
 
+/**
+ * sort the list
+ * @param comparator
+ * @return sorted list
+ * @throws Exception
+ */
 public List sort(IntCompare comparator) throws Exception{
     List sortedList = new List();// new list
     Iterator ite = this.getIterator();
@@ -434,6 +440,21 @@ public List sort(IntCompare comparator) throws Exception{
 
     return sortedList;
 
+};
+
+
+public Iterator search(IntFind finder) throws Exception{
+    Iterator ite = this.getIterator();
+    while(ite.iterate()){
+        if(finder.find(ite.getItem())){
+            return ite;
+        }
+    }
+    return null;
+};
+
+public boolean find(IntFind finder) throws Exception{
+    return this.search(finder) != null;
 };
 
 

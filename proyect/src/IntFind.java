@@ -1,5 +1,5 @@
 public interface IntFind {
 
-    public boolean find(IntFind finder) throws Exception;
+    public boolean find(Object item) throws Exception;
     
 }

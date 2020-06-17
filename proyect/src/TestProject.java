@@ -33,11 +33,19 @@ public class TestProject {
             String nombre = "Brayan";
 
             list.filter(intFilter -> ((Student) intFilter).name.equalsIgnoreCase(nombre))// compare names and if equals = true, stored the object in the list
-            .print(intPrint -> (String) intPrint.toString());   */
+            .print(intPrint -> (String) intPrint.toString());   
 
             list.sort((item1,item2) ->{
                 return ((Student) item1).idStudent - ((Student) item2).idStudent;
-            }).print(intPrint -> (String) intPrint.toString());
+            }).print(intPrint -> (String) intPrint.toString());  */
+
+            Iterator searched = list.search(finder -> ((Student) finder).name.contains("z"));// check if name has an "y"
+            Student encontrado = (Student)searched.getItem(); 
+            System.out.println(encontrado.toString()); 
+            
+            boolean letter = list.find(finder -> ((Student) finder).lastName.contains("i"));
+            System.out.println("\nfind letter 'i' " + letter);
+
             
            
 
