@@ -111,7 +111,7 @@ public class List implements ListInterface{
     private boolean isValidIndex(int index){
         return (index > 0 && index <= this.totalNodes);
     }
-
+    
     public void print(){
         Node aux = new Node();
         aux = this.first;
@@ -123,7 +123,7 @@ public class List implements ListInterface{
             contador++;           
         }
 
-    }
+    } 
 
 
 
@@ -364,6 +364,28 @@ public List map(IntMap intMap) throws Exception{
     return newList;// return new List
 
 }
+
+public List filter(IntFilter intFilter) throws Exception{
+    List newList = new List();// creatin new list
+    Iterator ite = this.getIterator();// points iterator to first
+    while(ite.iterate()){// while ite is not null or end of list
+        Object item = ite.getItem();// stored object in item
+        boolean approved = intFilter.filter(item);// applying filter methods that recieved an object as arguments
+        if(approved){
+            newList.insert(item);
+        }        
+    }
+    return newList;
+
+};
+
+public void print(IntPrint intPrint) throws Exception{
+    Iterator ite = this.getIterator();
+    while(ite.iterate()){
+        System.out.println(intPrint.toPrint(ite.getItem()));
+    }
+
+};
 
 
 }// End of Class.

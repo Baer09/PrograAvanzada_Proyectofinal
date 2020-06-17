@@ -14,7 +14,7 @@ public class TestProject {
             // applying map and then forEach to print new list
             List listUpdated = new List(); // new list to store objects 
 
-            listUpdated = list.map(intMap -> {
+           /* listUpdated = list.map(intMap -> {
                 Student student = (Student) intMap;// casting
                 if(student.scholarship){// if true
                     student.monthlyPayment = 100; // paymetn is 100
@@ -29,12 +29,18 @@ public class TestProject {
             list.forEach(intForEach -> {
             Student student = (Student) intForEach;
             System.out.println(student);
-            }); 
+            }); */
+            String nombre = "Brayan";
+
+            list.filter(intFilter -> ((Student) intFilter).name.equalsIgnoreCase(nombre))// compare names and if equals = true, stored the object in the list
+            .print(intPrint -> (String) intPrint.toString());
+            
+           
 
 
     
         }catch(Exception exc){
-            System.out.println("error: " + exc.getMessage());
+            System.out.println("error: item not found " + exc.getMessage());
         }
         
         

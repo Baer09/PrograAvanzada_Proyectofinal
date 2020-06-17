@@ -77,9 +77,9 @@ public interface ListInterface{
      * @return List with Item that were affeced.
      * @throws Exception
      */
-    //public List filter(IntFilter intFilter) throws Exception;
+    public List filter(IntFilter intFilter) throws Exception;
 
-    //public void print(IntPrint intPrint) throws Exception;
+    public void print(IntPrint intPrint) throws Exception;
 
     //public List sort(IntCompare intSort) throws Exception;
 
