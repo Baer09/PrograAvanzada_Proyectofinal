@@ -1,5 +1,5 @@
 public interface IntReducer {
 
-    public Object reduce(Object initialValue,IntReducer reducer) throws Exception;
+    public Object reduce(Object initialValue,Object reducer) throws Exception;
     
 }

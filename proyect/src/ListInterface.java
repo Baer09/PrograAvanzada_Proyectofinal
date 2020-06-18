@@ -93,7 +93,7 @@ public interface ListInterface{
      */
     public Iterator search(IntFind finder) throws Exception;
 
-    //public Object reduce(Object initialValue,IntReducer reducer) throws Exception;
+    public Object reduce(Object initialValue,IntReducer reducer) throws Exception;
 
     
 

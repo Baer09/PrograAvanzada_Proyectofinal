@@ -443,18 +443,34 @@ public List sort(IntCompare comparator) throws Exception{
 };
 
 
+/**
+ * search for an Iterator that met the criteria
+ * @param finder
+ * @return Iterator that mets the criteria or null .
+ * @throws Exception
+ */ 
 public Iterator search(IntFind finder) throws Exception{
     Iterator ite = this.getIterator();
     while(ite.iterate()){
-        if(finder.find(ite.getItem())){
+        if(finder.find(ite.getItem())){// comre if the item is equal to the iterator (use method in interface)
             return ite;
         }
     }
-    return null;
+    return null;// if not , return null
 };
 
 public boolean find(IntFind finder) throws Exception{
     return this.search(finder) != null;
+};
+
+
+public Object reduce(Object initialValue,IntReducer reducer) throws Exception{
+    Object acumulator = initialValue;
+    Iterator ite = this.getIterator();
+    while(ite.iterate()){
+        acumulator = reducer.reduce(acumulator, ite.getItem());
+    }
+    return acumulator;
 };
 
 

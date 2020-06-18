@@ -37,14 +37,23 @@ public class TestProject {
 
             list.sort((item1,item2) ->{
                 return ((Student) item1).idStudent - ((Student) item2).idStudent;
-            }).print(intPrint -> (String) intPrint.toString());  */
+            }).print(intPrint -> (String) intPrint.toString());  
 
             Iterator searched = list.search(finder -> ((Student) finder).name.contains("z"));// check if name has an "y"
             Student encontrado = (Student)searched.getItem(); 
             System.out.println(encontrado.toString()); 
             
             boolean letter = list.find(finder -> ((Student) finder).lastName.contains("i"));
-            System.out.println("\nfind letter 'i' " + letter);
+            System.out.println("\nfind letter 'i' " + letter);  */
+
+            String names = (String) list.reduce(new String(),(initialValue, reducer) ->{// received an object and interface received 2 objects
+                String nombres = (String)initialValue;// savind names(acumulator)
+                Student student = (Student) reducer;// casting object to String
+                return nombres + " " + student.name;// concatenae names
+
+            });
+
+            System.out.println("Names" + names +"\n");
 
             
            
