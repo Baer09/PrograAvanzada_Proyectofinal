@@ -1,2 +1,2 @@
-javac TestProject.java
-java TestProject
+javac ProjectMenu.java
+java ProjectMenu
