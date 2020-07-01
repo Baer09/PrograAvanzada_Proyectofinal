@@ -1,10 +1,12 @@
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -16,41 +18,59 @@ public class GuiProyecto extends JFrame {
     JMenuBar menuOptions;
     JMenu options, subMenu;
     JMenuItem menu1,menu2,menu3,menu4,menu5,menu6,menu7,menu8,menu9,menu10,menu11,menu12;
-    JLabel etiqueta;
-
+    JLabel etiquetaImagen,etiqueta1,etiqueta2;
+    ActionListener aListener,loadCatalogos;
+    //---------------------------------Constructor-------------------------------------------------------//
     public GuiProyecto(){
-        this.setSize(700,200);// window's size
+        this.setSize(700,250);// window's size
         this.setTitle("Final Project - Programacion Avanzada");// title
         this.setLocationRelativeTo(null);// place window on the center
         //this.setDefaultCloseOperation(EXIT_ON_CLOSE);// close window when pressing X button
         this.setResizable(false);
-        this.setUndecorated(true);
+        this.setUndecorated(true);// removed (- [] X) buttons
+        this.setBackground(Color.blue);
+        
+        
         
 
        components();
     }
 
+    /**
+     * adding comptonet to JFrame
+     */
     private void components(){
         menuPanel();
         menuBarOptions();
-        colocarEtiqueta();
+        colocarEtiquetas();
 
     }
 
+    /**
+     * adding panel to JFrame
+     */
     private void menuPanel(){
         panel = new JPanel();
         panel.setLayout(null);
-        //panel.setBackground(Color.BLACK);      
+        panel.setBackground(Color.BLACK);      
         this.getContentPane().add(panel);
     }
 
+    /**
+     * menu options
+     */
     private void menuBarOptions(){
         menuOptions = new JMenuBar();// create menu bar
+
         
         options = new JMenu("Menu");// create main menu
+        //options.setOpaque(false);
+        options.setForeground(Color.gray);
+        
         subMenu = new JMenu("Reportes");// create sub menu
         // creating items for main menu
         menu1 = new JMenuItem("Cargar Catalogos");
+        menu1.setForeground(Color.green);
         menu3 = new JMenuItem("Salir");
         // creating item for submenu
         menu4 = new JMenuItem("1. Estudiantes Asignados a una seccion");
@@ -76,30 +96,66 @@ public class GuiProyecto extends JFrame {
         subMenu.add(menu10);
         subMenu.add(menu11);
         subMenu.add(menu12);       
-
-        menuOptions.add(options);// adding menubar      
+        menuOptions.setBackground(Color.black);
+        menuOptions.add(options);// adding menubar  
+            
         setJMenuBar(menuOptions);// show menu bar  
 
-        ActionListener aListener = new ActionListener(){
+        //-----------------------------Adding Actions to each menu bar ------------------------------------//
+
+
+        aListener = new ActionListener(){ // adding action 
             @Override
             public void actionPerformed (ActionEvent ae){
-                System.exit(0);
+                System.exit(0);// close program
 
             }
         };
 
+        loadCatalogos = new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae){
+                try{
+                    DataManagement dataStudent = new DataManagement("..\\catalogos", "estudiantes.csv", ",");
+                    DataManagement dataSeccion = new DataManagement("..\\catalogos", "secciones.csv", ",");
+                    JOptionPane.showMessageDialog(null,"The files were successfully loaded");
+                    
+                }
+                catch(Exception exc){
+                     System.err.println("Error while loading files: "+exc.getMessage());
+                     JOptionPane.showMessageDialog(null,"Erro while loading files");
+            }
+                
 
-        menu3.addActionListener(aListener);  
+            }
+        };
+        //------------------------------------------------------------------------------------------------//
+
+
+        menu3.addActionListener(aListener);  // adding action (close program).
+        menu1.addActionListener(loadCatalogos);
     }
+    //---------------------------------------End Menu Options---------------------------------------------//
 
 
 
-    //--------------------------------
+    //------------------------------------Labels---------------------------------------------------------//
 
-    private void colocarEtiqueta() {
-        etiqueta = new JLabel("working ......");
-        etiqueta.setBounds(20, 10, 250, 100);
-        panel.add(etiqueta);
+    private void colocarEtiquetas() {
+        etiquetaImagen = new JLabel(new ImageIcon("..\\images\\logo2.png"));
+        etiquetaImagen.setBounds(275,50, 127, 100);//X,Y,ancho,alto
+
+        etiqueta1 = new JLabel("PROGRAMACION AVANZADA: PROYECTO FINAL");
+        etiqueta1.setBounds(200,10,400,50);//X,Y,ancho,alto
+        etiqueta1.setForeground(Color.gray);
+
+        etiqueta2 = new JLabel("BRAYAN ESCOBAR");
+        etiqueta2.setBounds(575,180,400,50);//X,Y,ancho,alto
+        etiqueta2.setForeground(Color.gray);
+        
+        panel.add(etiquetaImagen);
+        panel.add(etiqueta1);
+        panel.add(etiqueta2);
     }
 
     

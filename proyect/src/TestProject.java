@@ -1,6 +1,7 @@
 public class TestProject {
 
     public static void main(String[]args){
+        /*
         List list = new List();
         Student student1 = new Student(3,"Brayan","Escobar",true);
         Student student2 = new Student(2,"Angela","Amarilis",true);
@@ -8,7 +9,7 @@ public class TestProject {
 
         list.insertFirst(student1);
         list.insertLast(student2);
-        list.insertLast(student3);
+        list.insertLast(student3); */
 
         try{
             // applying map and then forEach to print new list
@@ -44,7 +45,7 @@ public class TestProject {
             System.out.println(encontrado.toString()); 
             
             boolean letter = list.find(finder -> ((Student) finder).lastName.contains("i"));
-            System.out.println("\nfind letter 'i' " + letter);  */
+            System.out.println("\nfind letter 'i' " + letter);  
 
             String names = (String) list.reduce(new String(),(initialValue, reducer) ->{// received an object and interface received 2 objects
                 String nombres = (String)initialValue;// savind names(acumulator)
@@ -53,7 +54,22 @@ public class TestProject {
 
             });
 
-            System.out.println("Names" + names +"\n");
+            System.out.println("Names" + names +"\n");  */
+
+            DataManagement test = new DataManagement("..\\catalogos","estudiantes.csv",",");
+            DataManagement dataSeccion = new DataManagement("..\\catalogos", "secciones.csv", ",");
+            listUpdated = test.loadDataStudent();
+            listUpdated.print(intPrint -> (String) intPrint.toString());
+            System.out.println("-------------------------------------------");
+            List listSeccion = new List();
+            listSeccion = dataSeccion.loadDataSeccion();
+            listSeccion.print(intPrint -> (String) intPrint.toString());
+
+            
+
+            
+
+            
 
             
            
@@ -61,7 +77,7 @@ public class TestProject {
 
     
         }catch(Exception exc){
-            System.out.println("error: item not found " + exc.getMessage());
+            System.out.println("error: file not found" + exc.getMessage());
         }
         
         
