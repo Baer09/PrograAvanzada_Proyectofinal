@@ -1,7 +1,7 @@
 package business;
 
 public class Seccion {
-    private String id;
+    private int id;
     private int anio;
     private String nivel;
     private int grado;
@@ -9,8 +9,10 @@ public class Seccion {
     private int idProfesorEncargado;
     private int salon;
 
+    
+
     public Seccion(String [] data){
-        this.id = data[0];
+        this.id = Integer.parseInt(data[0]);
         this.anio = Integer.parseInt(data[1]);
         this.nivel= data[2];
         this.grado = Integer.parseInt(data[3]);
@@ -21,7 +23,7 @@ public class Seccion {
     }
 
     //------------------------------------getters-------------------------------------------------------//
-    public String getId(){
+    public int getId(){
         return this.id;
     }
     public int getAnio(){
@@ -43,7 +45,7 @@ public class Seccion {
         return this.salon;
     }
     //--------------------------------------setters-----------------------------------------------------//
-    public void setId(String id){
+    public void setId(int id){
         this.id = id;
     }
     public void setAnio(int anio){

@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import business.*;
+
 
 
 public class GuiProyecto extends JFrame {
@@ -19,7 +21,11 @@ public class GuiProyecto extends JFrame {
     JMenu options, subMenu;
     JMenuItem menu1,menu2,menu3,menu4,menu5,menu6,menu7,menu8,menu9,menu10,menu11,menu12;
     JLabel etiquetaImagen,etiqueta1,etiqueta2;
-    ActionListener aListener,loadCatalogos;
+    ActionListener aListener,loadCatalogos,reporte1;
+
+    private static List listaEstudiantes = new List();
+    private static List listaSecciones = new List();
+    private static List listaAsignaciones = new List();
     //---------------------------------Constructor-------------------------------------------------------//
     public GuiProyecto(){
         this.setSize(700,250);// window's size
@@ -111,14 +117,21 @@ public class GuiProyecto extends JFrame {
 
             }
         };
-
+        //-------------------------------------cargar Catalogos -------------------------------------//
         loadCatalogos = new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent ae){
                 try{
                     DataManagement dataStudent = new DataManagement("..\\catalogos", "estudiantes.csv", ",");
                     DataManagement dataSeccion = new DataManagement("..\\catalogos", "secciones.csv", ",");
-                    JOptionPane.showMessageDialog(null,"The files were successfully loaded");
+                    DataManagement dataAsignacion = new DataManagement("..\\catalogos","asignaciones.csv",",");
+                    listaEstudiantes = dataStudent.loadDataStudent();
+                    listaSecciones = dataSeccion.loadDataSeccion();
+                    listaAsignaciones = dataAsignacion.loadDataAsignacion();
+                    if(listaEstudiantes != null && listaSecciones != null && listaAsignaciones != null){//todas las listas tiene que tener data
+                        JOptionPane.showMessageDialog(null,"The files were successfully added");
+                    }
+                    //listaSecciones.print(intPrint -> (String) intPrint.toString());
                     
                 }
                 catch(Exception exc){
@@ -129,11 +142,85 @@ public class GuiProyecto extends JFrame {
 
             }
         };
-        //------------------------------------------------------------------------------------------------//
+    //-----------------------------------------Reporte 1 ---------------------------------------------//
+    
+    reporte1 = new ActionListener(){
+        
+        int grado=4;//------------------
+        @Override
+        public void actionPerformed(ActionEvent ae){
+            if(listaAsignaciones.isEmpty() || listaEstudiantes.isEmpty() || listaSecciones.isEmpty()){
+                JOptionPane.showMessageDialog(null,"Error: Catalogos Incompletos,cargue los catalogos primero");
+            }
+            // parametro de busqueda
+            int anio = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el anio: "));
+            String nivel = JOptionPane.showInputDialog("Ingrese Nivel: 1.Primaria 2.Basicos 3.Deiversificado : ");
+                        
+            if(nivel.equalsIgnoreCase("primaria")){
+                grado = Integer.parseInt(JOptionPane.showInputDialog("Ingrese grado de primaria(1,2,3,4,5,6): "));
+            }
+            else if(nivel.equalsIgnoreCase("basicos")){
+                grado = Integer.parseInt(JOptionPane.showInputDialog("Ingrese grado de basicos(1,2,3): "));
+            }
+            else if(nivel.equalsIgnoreCase("diversificado")){
+                grado = Integer.parseInt(JOptionPane.showInputDialog("Ingrese grado de diversificado(4,5,6):  "));
+            }
+            else{JOptionPane.showMessageDialog(null,"Opcion invalida");}
+
+            String seccion = JOptionPane.showInputDialog("Ingrese seccion (A-F): ");
+            System.out.println(anio+"-"+nivel+"-"+grado+"-"+seccion);
+
+            //Obtener seccion
+            try{
+            Iterator iteSeccion = GuiProyecto.listaSecciones.search(objecto -> {
+                
+                Seccion sec = (Seccion) objecto;// convertir objeto a seccion
+                return sec.getAnio() == anio &&// comparando items
+                       sec.getNivel().equalsIgnoreCase(nivel) &&
+                       sec.getGrado() == grado &&
+                       sec.getSeccion() == seccion.charAt(0);
+                
+
+            });      
+            if(iteSeccion != null){
+                System.out.println(iteSeccion.getItem().toString());
+            }
+            else{
+                System.out.println("no existen registros.");
+                
+            }
+           //System.out.println(iteSeccion.getItem().toString());
+
+            //listaSecciones.print(intPrint -> (String) intPrint.toString());
+
+            Seccion seccionEncontrada = (Seccion) iteSeccion.getItem();
+
+
+        }catch(Exception exc){System.out.println("error "+exc.getMessage());}
+
+        
+         
+
+
+        }//end actionPerformance
+    
+
+      
+    };// end actionListener
+    
+    
+
+
+
+
+
+    //------------------------------------------------------------------------------------------------//
 
 
         menu3.addActionListener(aListener);  // adding action (close program).
-        menu1.addActionListener(loadCatalogos);
+        menu1.addActionListener(loadCatalogos);// load files
+        menu4.addActionListener(reporte1);
+
     }
     //---------------------------------------End Menu Options---------------------------------------------//
 
