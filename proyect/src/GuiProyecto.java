@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import business.*;
+import business.Student;
 
 
 
@@ -146,7 +147,7 @@ public class GuiProyecto extends JFrame {
     
     reporte1 = new ActionListener(){
         
-        int grado=4;//------------------
+        int grado=0;//------------------
         @Override
         public void actionPerformed(ActionEvent ae){
             if(listaAsignaciones.isEmpty() || listaEstudiantes.isEmpty() || listaSecciones.isEmpty()){
@@ -170,7 +171,7 @@ public class GuiProyecto extends JFrame {
             String seccion = JOptionPane.showInputDialog("Ingrese seccion (A-F): ");
             System.out.println(anio+"-"+nivel+"-"+grado+"-"+seccion);
 
-            //Obtener seccion
+            //Obtener seccion comparando datos de la listSeccion 
             try{
             Iterator iteSeccion = GuiProyecto.listaSecciones.search(objecto -> {
                 
@@ -183,7 +184,7 @@ public class GuiProyecto extends JFrame {
 
             });      
             if(iteSeccion != null){
-                System.out.println(iteSeccion.getItem().toString());
+                System.out.println(iteSeccion.getItem().toString());// si fue encontrada
             }
             else{
                 System.out.println("no existen registros.");
@@ -193,7 +194,36 @@ public class GuiProyecto extends JFrame {
 
             //listaSecciones.print(intPrint -> (String) intPrint.toString());
 
-            Seccion seccionEncontrada = (Seccion) iteSeccion.getItem();
+            Seccion seccionEncontrada = (Seccion) iteSeccion.getItem();// gurdando iterator en clas seccion
+
+            //filtrando estudiantes de la list Asiganacion
+
+            List asignacionesSeccion = listaAsignaciones.filter(objecto ->{
+                Asignacion asignacion = (Asignacion) objecto;// castiong object to Asignacion
+                return asignacion.getIdSeccion() == seccionEncontrada.getId();// si son iguales, inserta item en lista
+
+            });
+
+            System.out.println("total estudiatnes: " + asignacionesSeccion.getLength());
+
+            // buscando estudiantes en esa asignacion en base a su carnet
+            List estudiantesAsignados = listaEstudiantes.filter(objeto ->{
+                Student estudiante = (Student) objeto;//casting object to Student
+                try{
+                return asignacionesSeccion.find(objetoAsig ->{
+                    Asignacion asg = (Asignacion) objetoAsig;// casting to Asignacion
+                    return asg.getCarnet().equals(estudiante.getId());
+                });
+                }catch(Exception exc){
+                    return false;
+                }
+            });
+
+            // imprimiendo estudiantes asignados
+            estudiantesAsignados.print();
+
+            DataManagement createNewfile = new DataManagement();
+            createNewfile.storedDataFile(estudiantesAsignados,"reporte1.html",anio,nivel,grado,seccion);
 
 
         }catch(Exception exc){System.out.println("error "+exc.getMessage());}

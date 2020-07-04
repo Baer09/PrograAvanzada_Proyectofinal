@@ -1,6 +1,10 @@
-import java.io.File; 
+import java.io.File;
+import java.io.FileWriter;
+import java.net.URI;
+import java.net.URLEncoder;
 import java.util.Scanner;
 import business.Student;
+import java.awt.Desktop;
 import business.Asignacion;
 import business.Seccion;
 
@@ -24,6 +28,7 @@ public class DataManagement{
         this.column = this.input.nextLine();
 
     }
+    public DataManagement(){};
     
     
     //-------------------------------------DataStudent--------------------------------------------------//
@@ -121,6 +126,43 @@ public class DataManagement{
             list.insert(this.readOneLineAsignacion());// insert object in list
         }
         return list;// return list
+    }
+
+
+    //----------------------------------reportes-------------------------------------------------------//
+
+    /**
+     * create file to stored reports
+     */
+    private File createFile(String fileName) throws Exception{
+        File reporte = new File(fileName);//inicializar file y enviar nombre de new file
+        reporte.createNewFile();
+        return reporte;
+    }
+
+    public void storedDataFile(List listReporte,String fileName,int anio,String nivel,int grado,String seccion)throws Exception{
+        Student printHtml = new Student();
+        FileWriter writeInTheFile = new FileWriter(createFile(fileName));
+        writeInTheFile.write(printHtml.tableHtml(anio,nivel,grado,seccion));
+        listReporte.forEach(intForEach ->{// use intForEach to print each object in the file
+            Student estudiante = (Student) intForEach;
+            writeInTheFile.write(estudiante.toString()+"\r\n");
+
+        });
+        writeInTheFile.write("</table>");
+        writeInTheFile.close();
+        
+
+        
+        URI oURL = new URI("reporte1.html");
+        
+        Desktop.getDesktop().browse(oURL);
+       
+     
+
+
+        
+
     }
 
     

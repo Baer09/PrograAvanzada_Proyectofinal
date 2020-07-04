@@ -19,7 +19,7 @@ public class Student {
         this.dateOfBirth = LocalDate.parse(data[4],DateTimeFormatter.ofPattern("M/d/yyy"));
         this.scholarship = data[5];
     }
-    
+    public Student(){}
     //---------------------------------getters--------------------------------------------------------------//
     public String getId(){
         return this.id;
@@ -62,8 +62,14 @@ public class Student {
     //------------------------------------------------------------------------------------------------------//
     @Override
     public String toString(){
-        return this.id+"-"+this.name+"-"+this.lastName+"-"+this.gender+"-"+this.dateOfBirth.toString()+"-"+this.scholarship;
+        return "<tr>\n"+
+                "<td>"+this.id+"</td><td>"+this.name+"</td><td>"+this.lastName+"</td><td>"+this.gender+"</td><td>"+this.dateOfBirth.toString()+"</td><td>"+this.scholarship+"</td>\n"+
+                "</tr>";
 
+    }
+    public String tableHtml(int year,String level,int grade,String section){
+        return "<style>table,td{border: 1px solid black;}</style><p>anio: "+year+"</p><p>nivel: "+level+"</p><p>grado: "+grade+"</p><p>seccion: "+section+"</p>"+
+                "\n<table><tr><td>carnet</td><td>nombre</td><td>apellido</td><td>genero</td><td>Dateofbirth</td><td>esbecado</td></tr>";
     }
     
 
