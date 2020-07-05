@@ -22,12 +22,14 @@ public class GuiProyecto extends JFrame {
     JMenu options, subMenu;
     JMenuItem menu1,menu2,menu3,menu4,menu5,menu6,menu7,menu8,menu9,menu10,menu11,menu12;
     JLabel etiquetaImagen,etiqueta1,etiqueta2;
-    ActionListener aListener,loadCatalogos,reporte1;
+    ActionListener aListener,loadCatalogos,reporte1,reporte6;
+    int grado =0;
 
     private static List listaEstudiantes = new List();
     private static List listaSecciones = new List();
     private static List listaAsignaciones = new List();
     //---------------------------------Constructor-------------------------------------------------------//
+    
     public GuiProyecto(){
         this.setSize(700,250);// window's size
         this.setTitle("Final Project - Programacion Avanzada");// title
@@ -35,26 +37,22 @@ public class GuiProyecto extends JFrame {
         //this.setDefaultCloseOperation(EXIT_ON_CLOSE);// close window when pressing X button
         this.setResizable(false);
         this.setUndecorated(true);// removed (- [] X) buttons
-        this.setBackground(Color.blue);
-        
-        
-        
-
-       components();
+        this.setBackground(Color.blue);       
+        components();
     }
 
     /**
-     * adding comptonet to JFrame
+     * adding componets to JFrame
+     * @return void
      */
     private void components(){
         menuPanel();
         menuBarOptions();
         colocarEtiquetas();
-
     }
-
     /**
      * adding panel to JFrame
+     * @return void
      */
     private void menuPanel(){
         panel = new JPanel();
@@ -64,20 +62,18 @@ public class GuiProyecto extends JFrame {
     }
 
     /**
-     * menu options
+     * adding menu bar
+     * @return void
      */
     private void menuBarOptions(){
         menuOptions = new JMenuBar();// create menu bar
 
         
         options = new JMenu("Menu");// create main menu
-        //options.setOpaque(false);
-        options.setForeground(Color.gray);
-        
+        options.setForeground(Color.gray);        
         subMenu = new JMenu("Reportes");// create sub menu
         // creating items for main menu
         menu1 = new JMenuItem("Cargar Catalogos");
-        menu1.setForeground(Color.green);
         menu3 = new JMenuItem("Salir");
         // creating item for submenu
         menu4 = new JMenuItem("1. Estudiantes Asignados a una seccion");
@@ -109,155 +105,220 @@ public class GuiProyecto extends JFrame {
         setJMenuBar(menuOptions);// show menu bar  
 
         //-----------------------------Adding Actions to each menu bar ------------------------------------//
-
-
         aListener = new ActionListener(){ // adding action 
             @Override
             public void actionPerformed (ActionEvent ae){
                 System.exit(0);// close program
-
             }
         };
-        //-------------------------------------cargar Catalogos -------------------------------------//
-        loadCatalogos = new ActionListener(){
+        loadCatalogos = new ActionListener(){// carga catalogos
             @Override
             public void actionPerformed(ActionEvent ae){
-                try{
-                    DataManagement dataStudent = new DataManagement("..\\catalogos", "estudiantes.csv", ",");
-                    DataManagement dataSeccion = new DataManagement("..\\catalogos", "secciones.csv", ",");
-                    DataManagement dataAsignacion = new DataManagement("..\\catalogos","asignaciones.csv",",");
-                    listaEstudiantes = dataStudent.loadDataStudent();
-                    listaSecciones = dataSeccion.loadDataSeccion();
-                    listaAsignaciones = dataAsignacion.loadDataAsignacion();
-                    if(listaEstudiantes != null && listaSecciones != null && listaAsignaciones != null){//todas las listas tiene que tener data
-                        JOptionPane.showMessageDialog(null,"The files were successfully added");
-                    }
-                    //listaSecciones.print(intPrint -> (String) intPrint.toString());
-                    
-                }
-                catch(Exception exc){
-                     System.err.println("Error while loading files: "+exc.getMessage());
-                     JOptionPane.showMessageDialog(null,"Erro while loading files");
-            }
-                
-
+                cargaCatalogos();               
             }
         };
     //-----------------------------------------Reporte 1 ---------------------------------------------//
     
     reporte1 = new ActionListener(){
-        
-        int grado=0;//------------------
         @Override
         public void actionPerformed(ActionEvent ae){
-            if(listaAsignaciones.isEmpty() || listaEstudiantes.isEmpty() || listaSecciones.isEmpty()){
-                JOptionPane.showMessageDialog(null,"Error: Catalogos Incompletos,cargue los catalogos primero");
+            try {
+                createReporte1();
+            } catch (Exception e) {
+                System.out.println("error: while creating report: "+e.getMessage());
+                JOptionPane.showMessageDialog(null,"Opcion incorrecta,ingrese una opcion valida");
             }
-            // parametro de busqueda
-            int anio = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el anio: "));
-            String nivel = JOptionPane.showInputDialog("Ingrese Nivel: 1.Primaria 2.Basicos 3.Deiversificado : ");
-                        
-            if(nivel.equalsIgnoreCase("primaria")){
-                grado = Integer.parseInt(JOptionPane.showInputDialog("Ingrese grado de primaria(1,2,3,4,5,6): "));
+
+        }//end actionPerformance   
+    };// end actionListener  
+    //------------------------------------------reporte 6 ---------------------------------------------//
+    reporte6 = new ActionListener(){
+        @Override
+        public void actionPerformed(ActionEvent ae){
+            try {
+                createReporte6();
+            } catch (Exception e) {
+                System.out.println("error: while creating report: "+e.getMessage());
+                JOptionPane.showMessageDialog(null,"Opcion incorrecta,ingrese una opcion valida");
             }
-            else if(nivel.equalsIgnoreCase("basicos")){
-                grado = Integer.parseInt(JOptionPane.showInputDialog("Ingrese grado de basicos(1,2,3): "));
-            }
-            else if(nivel.equalsIgnoreCase("diversificado")){
-                grado = Integer.parseInt(JOptionPane.showInputDialog("Ingrese grado de diversificado(4,5,6):  "));
-            }
-            else{JOptionPane.showMessageDialog(null,"Opcion invalida");}
 
-            String seccion = JOptionPane.showInputDialog("Ingrese seccion (A-F): ");
-            System.out.println(anio+"-"+nivel+"-"+grado+"-"+seccion);
-
-            //Obtener seccion comparando datos de la listSeccion 
-            try{
-            Iterator iteSeccion = GuiProyecto.listaSecciones.search(objecto -> {
-                
-                Seccion sec = (Seccion) objecto;// convertir objeto a seccion
-                return sec.getAnio() == anio &&// comparando items
-                       sec.getNivel().equalsIgnoreCase(nivel) &&
-                       sec.getGrado() == grado &&
-                       sec.getSeccion() == seccion.charAt(0);
-                
-
-            });      
-            if(iteSeccion != null){
-                System.out.println(iteSeccion.getItem().toString());// si fue encontrada
-            }
-            else{
-                System.out.println("no existen registros.");
-                
-            }
-           //System.out.println(iteSeccion.getItem().toString());
-
-            //listaSecciones.print(intPrint -> (String) intPrint.toString());
-
-            Seccion seccionEncontrada = (Seccion) iteSeccion.getItem();// gurdando iterator en clas seccion
-
-            //filtrando estudiantes de la list Asiganacion
-
-            List asignacionesSeccion = listaAsignaciones.filter(objecto ->{
-                Asignacion asignacion = (Asignacion) objecto;// castiong object to Asignacion
-                return asignacion.getIdSeccion() == seccionEncontrada.getId();// si son iguales, inserta item en lista
-
-            });
-
-            System.out.println("total estudiatnes: " + asignacionesSeccion.getLength());
-
-            // buscando estudiantes en esa asignacion en base a su carnet
-            List estudiantesAsignados = listaEstudiantes.filter(objeto ->{
-                Student estudiante = (Student) objeto;//casting object to Student
-                try{
-                return asignacionesSeccion.find(objetoAsig ->{
-                    Asignacion asg = (Asignacion) objetoAsig;// casting to Asignacion
-                    return asg.getCarnet().equals(estudiante.getId());
-                });
-                }catch(Exception exc){
-                    return false;
-                }
-            });
-
-            // imprimiendo estudiantes asignados
-            estudiantesAsignados.print();
-
-            DataManagement createNewfile = new DataManagement();
-            createNewfile.storedDataFile(estudiantesAsignados,"reporte1.html",anio,nivel,grado,seccion);
-
-
-        }catch(Exception exc){System.out.println("error "+exc.getMessage());}
-
-        
-         
-
-
-        }//end actionPerformance
-    
-
-      
+        }//end actionPerformance   
     };// end actionListener
-    
-    
-
-
-
-
-
-    //------------------------------------------------------------------------------------------------//
-
-
+    //-------------------------------------Adding Acting to menurBar------------------------------------//
         menu3.addActionListener(aListener);  // adding action (close program).
         menu1.addActionListener(loadCatalogos);// load files
         menu4.addActionListener(reporte1);
+        menu9.addActionListener(reporte6);
+    }//End Menu Options
+    //----------------------------------------Carga Catalogos--------------------------------------------//
+
+     /**
+     * load csv files and stored them in a list
+     * @return void
+     * @throws Exception
+     */
+    public void cargaCatalogos(){
+        try{
+            DataManagement dataStudent = new DataManagement("..\\catalogos", "estudiantes.csv", ",");
+            DataManagement dataSeccion = new DataManagement("..\\catalogos", "secciones.csv", ",");
+            DataManagement dataAsignacion = new DataManagement("..\\catalogos","asignaciones.csv",",");
+            listaEstudiantes = dataStudent.loadDataStudent();
+            listaSecciones = dataSeccion.loadDataSeccion();
+            listaAsignaciones = dataAsignacion.loadDataAsignacion();
+            if(listaEstudiantes != null && listaSecciones != null && listaAsignaciones != null){//todas las listas tiene que tener data
+                JOptionPane.showMessageDialog(null,"Archivos Cargados exitosamente.");
+            }
+                        
+        }
+        catch(Exception exc){
+             System.err.println("Error while loading files: "+exc.getMessage());
+             JOptionPane.showMessageDialog(null,"Erro while loading files");
+    }
+    }
+    //------------------------------------------Reporte 1-------------------------------------------------//
+    /**
+     * method to generate reporte1
+     * @throws Exception
+     */
+    public boolean createReporte1()throws Exception{
+        
+        if(listaAsignaciones.isEmpty() || listaEstudiantes.isEmpty() || listaSecciones.isEmpty()){
+            JOptionPane.showMessageDialog(null,"Error: Catalogos Incompletos,cargue los catalogos primero");
+            return false;
+        }
+        // parametro de busqueda
+        int anio = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el anio: "));
+        String nivelInt = JOptionPane.showInputDialog("Ingrese Nivel: 1.Primaria 2.Basicos 3.Deiversificado : ");
+        String nivel = nivelOptions(nivelInt);
+        
+        if(nivel.equalsIgnoreCase("primaria")){
+            grado = Integer.parseInt(JOptionPane.showInputDialog("Ingrese grado de primaria(1,2,3,4,5,6): "));
+        }
+        else if(nivel.equalsIgnoreCase("basicos")){
+            grado = Integer.parseInt(JOptionPane.showInputDialog("Ingrese grado de basicos(1,2,3): "));
+        }
+        else if(nivel.equalsIgnoreCase("diversificado")){
+            grado = Integer.parseInt(JOptionPane.showInputDialog("Ingrese grado de diversificado(4,5,6):  "));
+        }
+        else{JOptionPane.showMessageDialog(null,"Opcion invalida");}
+
+        String seccion = JOptionPane.showInputDialog("Ingrese seccion (A-F): ");
+        System.out.println(anio+"-"+nivel+"-"+grado+"-"+seccion);
+
+        //Obtener seccion comparando datos de la listSeccion 
+        
+        Iterator iteSeccion = GuiProyecto.listaSecciones.search(objecto -> {
+            
+            Seccion sec = (Seccion) objecto;// convertir objeto a seccion
+            return sec.getAnio() == anio &&// comparando items
+                   sec.getNivel().equalsIgnoreCase(nivel) &&
+                   sec.getGrado() == grado &&
+                   sec.getSeccion() == Character.toUpperCase(seccion.charAt(0));//convertin  to upperCase            
+
+        });      
+        if(iteSeccion != null){
+            System.out.println(iteSeccion.getItem().toString());// si fue encontrada
+        }
+        else{
+            System.out.println("no existen registros.");            
+        }
+       //System.out.println(iteSeccion.getItem().toString());
+
+        //listaSecciones.print(intPrint -> (String) intPrint.toString());
+
+        Seccion seccionEncontrada = (Seccion) iteSeccion.getItem();// gurdando iterator en clas seccion
+
+        //filtrando estudiantes de la list Asiganacion
+
+        List asignacionesSeccion = listaAsignaciones.filter(objecto ->{
+            Asignacion asignacion = (Asignacion) objecto;// castiong object to Asignacion
+            return asignacion.getIdSeccion() == seccionEncontrada.getId();// si son iguales, inserta item en lista
+        });
+
+        System.out.println("total estudiatnes: " + asignacionesSeccion.getLength());
+
+        // buscando estudiantes en esa asignacion en base a su carnet
+        List estudiantesAsignados = listaEstudiantes.filter(objeto ->{
+            Student estudiante = (Student) objeto;//casting object to Student
+            try{
+            return asignacionesSeccion.find(objetoAsig ->{
+                Asignacion asg = (Asignacion) objetoAsig;// casting to Asignacion
+                return asg.getCarnet().equals(estudiante.getId());
+            });
+            }catch(Exception exc){
+                return false;
+            }
+        });
+
+        // imprimiendo estudiantes asignados
+        estudiantesAsignados.print();
+
+        DataManagement createNewfile = new DataManagement();
+        createNewfile.storedDataFile(estudiantesAsignados,"reporte1.html",anio,nivel,grado,seccion);
+        return true; 
+    }
+
+    //--------------------------------- Reporte6 ---------------------------------------------------//
+    public boolean createReporte6()throws Exception{
+        if(listaAsignaciones.isEmpty() || listaEstudiantes.isEmpty() || listaSecciones.isEmpty()){
+            JOptionPane.showMessageDialog(null,"Error: Catalogos Incompletos,cargue los catalogos primero");
+            return false;
+        }
+        //parametros de busqueda
+        int anio = Integer.parseInt(JOptionPane.showInputDialog("Ingrese anio:(1990 - 2020) "));
+        String mes = JOptionPane.showInputDialog("Ingrese mes");
+        String nivelInt = JOptionPane.showInputDialog("Ingrese Nivel: 1.Primaria 2.Basicos 3.Deiversificado : ");
+        String nivel = nivelOptions(nivelInt);
+
+        List nivelSeccion = listaSecciones.filter(objecto ->{//filtrando nivel dentro de lista seccion
+            Seccion seccion = (Seccion) objecto;// castiong object to Seccion
+            return seccion.getNivel().equalsIgnoreCase(nivel);// si son iguales, inserta item en lista
+        });
+        nivelSeccion.print();
+
+        List seccionesAsignadas = listaAsignaciones.filter(objeto ->{
+            Asignacion asig = (Asignacion) objeto;//casting object to asignacion
+            try{
+            return nivelSeccion.find(objetoAsig ->{
+                Seccion sec = (Seccion) objetoAsig;// casting to Asignacion
+                return sec.getId() == asig.getIdSeccion();
+            });
+            }catch(Exception exc){
+                return false;
+            }
+        });
+
+        //seccionesAsignadas.print();
+        
+
+        return true;
 
     }
-    //---------------------------------------End Menu Options---------------------------------------------//
 
-
+    /**
+     * level option menu
+     * @param option
+     * @return option as a string 
+     */
+    public String nivelOptions(String option){
+        String nivel="";
+        if(option.equals("1")){
+            nivel = "primaria";
+        }
+        else if (option.equals("2")){
+            nivel = "basicos";
+        }
+        else if (option.equals("3")){
+            nivel = "diversificado";
+        }
+        return nivel;
+    }
 
     //------------------------------------Labels---------------------------------------------------------//
 
+    /**
+     * labels for interface
+     */
     private void colocarEtiquetas() {
         etiquetaImagen = new JLabel(new ImageIcon("..\\images\\logo2.png"));
         etiquetaImagen.setBounds(275,50, 127, 100);//X,Y,ancho,alto
@@ -281,4 +342,4 @@ public class GuiProyecto extends JFrame {
 
 
     
-}
+}//End of class

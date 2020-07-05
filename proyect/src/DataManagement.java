@@ -18,6 +18,13 @@ public class DataManagement{
     Scanner input;
     String column;
 
+    /**
+     * constructor, receives a folder name, filename and delimiter
+     * @param folder
+     * @param fileName
+     * @param delimiter ",""
+     * @throws Exception
+     */
     public DataManagement(String folder,String fileName,String delimiter)throws Exception{
         this.folder = folder;
         this.fileName = fileName;
@@ -28,6 +35,7 @@ public class DataManagement{
         this.column = this.input.nextLine();
 
     }
+    // empty constructor
     public DataManagement(){};
     
     
@@ -140,6 +148,16 @@ public class DataManagement{
         return reporte;
     }
 
+    /**
+     * saved data from a list to an htmlfile.
+     * @param listReporte list with the data
+     * @param fileName name of the html file
+     * @param anio 
+     * @param nivel
+     * @param grado
+     * @param seccion
+     * @throws Exception
+     */
     public void storedDataFile(List listReporte,String fileName,int anio,String nivel,int grado,String seccion)throws Exception{
         Student printHtml = new Student();
         FileWriter writeInTheFile = new FileWriter(createFile(fileName));
@@ -154,9 +172,9 @@ public class DataManagement{
         
 
         
-        URI oURL = new URI("reporte1.html");
+        URI oURL = new URI("reporte1.html");//html file to open in browswer 
         
-        Desktop.getDesktop().browse(oURL);
+        Desktop.getDesktop().browse(oURL);// open file in browser
        
      
 
